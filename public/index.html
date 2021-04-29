@@ -2,9 +2,23 @@
 <html>
 <head>
     <title></title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+    <div id="main">
+        <div class="image-grid" >
+            <figure class="image-frame" v-for="image in images" alt="">
+                <img  :src="image.url"  v-bind:key="image.id" @click="">
+                <figcaption>{{image.title}}</figcaption>
+            </figure>
+        </div>
+    </div>
+
+ 
     <script src="/js/vue.js"></script>
     <script src="/js/axios.min.js"></script>
+    <script src="/js/script.js"></script>
 </body>
 </html>
+
+
