@@ -43,7 +43,7 @@ app.post('/upload', uploader.single('file'), s3.upload, (req, res) => {
         insertImages(title, description, username, fullUrl)
             .then((result) => {
                 // console.log('result.rows:', result.rows);
-                res.send(result.rows);
+                res.send(result.rows[0]);
             })
             .catch((error) => console.log('error', error));
         //send back a response to Vue using res.json

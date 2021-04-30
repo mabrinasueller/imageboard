@@ -30,8 +30,9 @@ new Vue({
 
             axios
                 .post('/upload', formData)
-                .then(() => {
-                    console.log('response received from the server');
+                .then(({ data }) => {
+                    console.log('data: ', data);
+                    this.images.unshift(data);
                 })
                 .catch((err) => {
                     console.log('err ', err);
