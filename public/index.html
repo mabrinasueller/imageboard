@@ -1,33 +1,61 @@
 <!doctype html>
 <html>
 <head>
-    <title></title>
+    <title>Imageboard</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+    <div class="wrapper">
+         <header class="main-head">Imageboard</header>
     <div id="main">
-        <h1>Imageboard</h1>
-        <!-- <h1>title: {{title}}</h1>
-        <h1>description {{description}}</h1>
-        <h1>username: {{username}}</h1> -->
+        <!-- <h1>Imageboard</h1> -->
 <form >
-    <input v-model="title" type="text" name="title" placeholder="title">
-    <input v-model="description" type="text" name="description" placeholder="description">
-    <input v-model="username" type="text" name="username" placeholder="username">
-    <input @change="handleChange" type="file" name="file" accept="image/*">
+    <input v-model="title" type="text" name="title" placeholder="Title">
+    <input v-model="description" type="text" name="description" placeholder="Description">
+    <input v-model="username" type="text" name="username" placeholder="Username">
+    <input @change="handleChange" type="file" name="file" class="inputfile" accept="image/*">
+    <label for="file">Choose a file</label>
     
-    <button @click.prevent="submitFile">Submit</button>
+    <button @click.prevent="submitFile" class="bouncy">Submit</button>
 </form>
 
-        <div class="image-grid" >
-            <figure class="image-frame" v-for="image in images"  v-bind:key="image.id">
-                <img  :src="image.url" alt="image">
-                <figcaption>{{image.title}}</figcaption>
-            </figure>
-        </div>
-    </div>
-
  
+               
+<div class="image-grid" >
+    <figure class="image-frame content" v-for="image in images"  v-bind:key="image.id">
+        <div @click="toggleImage(image.id)" class="overlay">
+        <img  :src="image.url" alt="image"class="gallery">
+        </div>
+        <figcaption>{{image.title}}</figcaption>
+    </figure>
+    
+</div>
+
+    <modal-component :image-id="imageId" v-if="imageId" @close="closeModal"></modal-component>
+
+</div>
+   
+
+  
+<!-- components live OUTSIDE of main -->
+<script id="modal-template" type="text/x-template">
+    <div class="modal-container">
+    <span @click="closeModal" class="close">X</span>
+    <img  :src="url" alt="image"style="object-fit: cover; padding: 10px">
+    <p v-if="title">{{title}}</p>
+     <p v-if="description">{{description}}</p>
+    <p v-if="username">Uploaded by {{username}} on {{created_at}}</p>
+    <p v-else>Uploaded on {{created_at}}</p>
+   
+                
+    </div>
+</script>
+<script></script>
+
+ <footer class="main-footer"></footer>
+ </div>
     <script src="/js/vue.js"></script>
     <script src="/js/axios.min.js"></script>
     <script src="/js/script.js"></script>

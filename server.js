@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const { getImages, insertImages } = require('./db');
+const { getImages, insertImage, getSingleImage } = require('./db');
 
 const multer = require('multer');
 const uidSafe = require('uid-safe');
@@ -35,29 +35,32 @@ app.post('/upload', uploader.single('file'), s3.upload, (req, res) => {
     console.log('req.file', req.file); //comes from multer
 
     if (req.file) {
-        var filename = req.file.filename;
-        var fullUrl = `${s3Url}${filename}`;
         const { title, description, username } = req.body;
+        const { filename } = req.file;
+        var fullUrl = s3Url + filename;
         console.log('fullUrl: ', fullUrl);
 
-        insertImages(title, description, username, fullUrl)
+        insertImage(title, description, username, fullUrl)
             .then((result) => {
-                // console.log('result.rows:', result.rows);
-                res.send(result.rows[0]);
+                console.log('result.rows:', result.rows[0]);
+                res.json(result.rows[0]);
             })
             .catch((error) => console.log('error', error));
         //send back a response to Vue using res.json
     } else {
-        //the response we send back needs to be something that indicates that the upload didn't work
         res.json({ success: false });
     }
 });
 
 app.get('/images', (req, res) => {
     getImages().then((result) => {
-        // console.log('result', result);
         res.json({ success: true, images: result.rows });
     });
 });
 
+app.get('/images/:imageId', (req, res) => {
+    getSingleImage(req.params.imageId).then((result) => {
+        res.json(result.rows[0]);
+    });
+});
 app.listen(8080, () => console.log('Server is listening'));
