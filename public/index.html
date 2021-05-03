@@ -42,7 +42,7 @@
 <!-- components live OUTSIDE of main -->
 <script id="modal-template" type="text/x-template">
     <div class="modal-container">
-    <span @click="closeModal" class="close">X</span>
+    <span @click="closeModal" class="close" style="cursor:pointer">X</span>
     <img  :src="url" alt="image"style="object-fit: cover; padding: 10px">
     <p v-if="title">{{title}}</p>
      <p v-if="description">{{description}}</p>

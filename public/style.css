@@ -4,7 +4,8 @@
 }
 
 body {
-    background: #faa381;
+    background: url('wave.jpg');
+    background-size: cover;
     /* padding: 1rem; */
     font-family: 'Lato', sans-serif;
     font-weight: 400;
@@ -13,7 +14,7 @@ body {
 .main-head {
     grid-area: header;
     height: 80px;
-    background-color: #f5cda7;
+    background-color: white;
 }
 
 .main-footer {
@@ -85,13 +86,17 @@ img.gallery {
     z-index: 3;
     background-color: white;
     margin: 0 auto;
-    border-radius: 5px;
+    border-radius: 10px;
+    top: 5vh;
+    left: 50%;
+    transform: translateX(-50%);
 
     /* vertical-align: middle; */
 }
 
 input {
     margin-bottom: 10px;
+    margin-left: 10px;
     padding: 10px;
     border: 0;
     box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
