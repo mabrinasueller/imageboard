@@ -1,6 +1,13 @@
 const express = require('express');
 const app = express();
-const { getImages, insertImage, getSingleImage } = require('./db');
+const {
+    getImages,
+    insertImage,
+    getSingleImage,
+    addComment,
+    selectComments,
+    getMoreImages,
+} = require('./db');
 
 const multer = require('multer');
 const uidSafe = require('uid-safe');
@@ -27,6 +34,7 @@ const uploader = multer({
 });
 
 app.use(express.static('public'));
+app.use(express.json());
 
 app.post('/upload', uploader.single('file'), s3.upload, (req, res) => {
     console.log('upload worked!');
@@ -38,11 +46,10 @@ app.post('/upload', uploader.single('file'), s3.upload, (req, res) => {
         const { title, description, username } = req.body;
         const { filename } = req.file;
         var fullUrl = s3Url + filename;
-        console.log('fullUrl: ', fullUrl);
+        // console.log('fullUrl: ', fullUrl);
 
         insertImage(title, description, username, fullUrl)
             .then((result) => {
-                console.log('result.rows:', result.rows[0]);
                 res.json(result.rows[0]);
             })
             .catch((error) => console.log('error', error));
@@ -62,5 +69,33 @@ app.get('/images/:imageId', (req, res) => {
     getSingleImage(req.params.imageId).then((result) => {
         res.json(result.rows[0]);
     });
+});
+
+app.post('/comment', (req, res) => {
+    const { username, comment_text: commentText, image_id: imageId } = req.body;
+    console.log('req.body', req.body);
+    addComment(username, commentText, imageId)
+        .then((result) => {
+            console.log('result.rows: ', result.rows);
+            res.json(result.rows);
+        })
+        .catch((err) => console.log('err: ', err));
+});
+
+app.get('/comments/:imageId', (req, res) => {
+    selectComments(req.params.imageId)
+        .then((result) => {
+            res.json(result.rows);
+        })
+        .catch((err) => console.log('err: ', err));
+});
+
+app.get('/moreImages/:lowestId', (req, res) => {
+    getMoreImages(req.params.lowestId)
+        .then((result) => {
+            console.log('result: ', result.rows);
+            res.json(result.rows);
+        })
+        .catch((err) => console.log('error: ', err));
 });
 app.listen(8080, () => console.log('Server is listening'));
