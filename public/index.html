@@ -25,25 +25,30 @@
  
                
 <div class="image-grid" >
-    <figure class="image-frame content" v-for="image in images"  v-bind:key="image.id">
-        <div @click="toggleImage(image.id)">
-        <img  :src="image.url" alt="image"class="gallery">
-        </div>
-        <figcaption>{{image.title}}</figcaption>
-    </figure>
-    
+    <div  v-for="image in images"  :key="image.id">
+        
+        <figure class="image-frame content">
+            <!-- <div @click="toggleImage(image.id)"> -->
+            <img  :src="image.url" alt="image" class="gallery">
+            <a :href="'#' + image.id">
+            <div class="title">
+                 <figcaption >{{image.title}}</figcaption>  
+            </div>  
+            </a>
+        </figure>  
+    </div>
 </div>
 
     <modal-component :image-id="imageId" v-if="imageId" @close="closeModal">
     
-        <comment-component :image-id="imageId">
-        </comment-component>
+     
     </modal-component>
-    <div v-if="imageId" class="overlay">
+    <div v-if="imageId" class="overlay" @click="closeModal">
 
     </div>
-
-<button v-if="" @click="gimmeMore">Show more</button>
+<div class="button-wrapper">
+<button v-if="!lowestIdOnScreen" @click="gimmeMore" class="showMore">Show more</button>
+</div>
 </div>
    
 
@@ -51,34 +56,35 @@
 <!-- components live OUTSIDE of main -->
 <script id="modal-template" type="text/x-template">
     <div class="modal-container">
-        <span @click="closeModal" class="close" style="cursor:pointer; font-weight: bold">X</span>
+       
             <div class="image-modal-container">
                 <img  :src="url" alt="image"style="object-fit: cover; padding: 10px">
             </div>
+            <div >
         <div class="modal-text-container">
-            <p v-if="title">{{title}}</p>
-            <p v-if="description">{{description}}</p>
-            <p v-if="username">Uploaded by {{username}} on {{created_at}}</p>
+            <p v-if="title">Title: {{title}}</p>
+            <p v-if="description">Description: {{description}}</p>
+            <p v-if="username">Uploaded by <span style="font-weight: bold">{{username}}</span> on {{created_at}}</p>
             <p v-else>Uploaded on {{created_at}}</p>
         </div>
-        <slot>
-
-        </slot>
+          <comment-component :image-id="imageId"></comment-component>
+        </div>
+         <span @click="closeModal" class="close" style="cursor:pointer; font-weight: bold">X</span>
     </div>
 </script>
 
 <script id="comment-template" type="text/x-template">
     <div class="comment-container">
-<form style="margin-top: 10px">
+<form style="margin-top: 10px; padding-left: 15px">
     <input v-model="comment_text" type="text" name="comment_text" placeholder="Comment here">
     <input v-model="username" type="text" name="username" placeholder="Your username">
-    <button @click.prevent="submitComment">Submit</button>
+    <button @click.prevent="submitComment" class="submitComment">Submit comment</button>
    </form>
 
 
   <div v-for="comment in comments" :key="comment.id" class="comments-text">
         <p>{{comment.comment_text}}</p>
-        <p>{{comment.username}} on {{comment.created_at}}</p>
+        <span>{{comment.username}} on {{comment.created_at}}</span>
     </div>
     </div>
 </script>
