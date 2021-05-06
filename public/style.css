@@ -4,7 +4,9 @@
 }
 
 body {
-    background-image: url('https://i.pinimg.com/564x/39/a2/2f/39a22f36d036d40c0934751dbae67108.jpg');
+    /* background-image: url('https://i.pinimg.com/564x/39/a2/2f/39a22f36d036d40c0934751dbae67108.jpg'); */
+    /* background: url(Moomin_family1.jpeg); */
+    background-color: #cbbfbb;
     /* padding: 1rem; */
     font-family: 'Lato', sans-serif;
     font-weight: 400;
@@ -12,8 +14,15 @@ body {
 
 .main-head {
     grid-area: header;
-    height: 80px;
-    background: url(Moomin_family1.jpeg);
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    height: 100px;
+    background-color: white;
+}
+
+.main-head img {
+    height: 100px;
 }
 
 .main-footer {
@@ -67,13 +76,14 @@ span.close:hover {
 
 .image-grid a {
     text-decoration: none;
-    font-size: 20px;
+    font-size: 22px;
+    color: black;
 }
 
 .image-frame {
     padding: 0.3rem;
     font-size: 1.2rem;
-    background-color: #a5ccd1;
+    background-color: #eabda8;
     transition: 0.3s;
 }
 img.gallery {
@@ -167,12 +177,13 @@ button:hover {
 
 .inputfile {
     color: transparent;
+    width: 120px;
 }
 .inputfile::-webkit-file-upload-button {
     visibility: hidden;
 }
 .inputfile::before {
-    content: 'Select some files';
+    content: 'Select a file';
     color: black;
     display: inline-block;
     background: -webkit-linear-gradient(top, #f9f9f9, #e3e3e3);
@@ -208,6 +219,10 @@ button.showMore {
 button.showMore:hover {
     box-shadow: 0 0 11px rgba(33, 33, 33, 0.4);
 }
+
+button.submitComment {
+    margin-left: 10px;
+}
 div.comments-text {
     padding-left: 20px;
 }
@@ -219,7 +234,7 @@ div.comments-text > p {
 div.comments-text > span {
     font-size: 12px;
 }
-/* @media screen and (max-width: 500px) {
+@media screen and (min-width: 480px) and (max-width: 800px) {
     .wrapper {
         grid-template-columns: 1fr;
         grid-template-areas:
@@ -229,4 +244,6 @@ div.comments-text > span {
     }
     .modal-container {
         flex-wrap: wrap;
-} */ ;
+        height: 300px;
+    }
+} ;

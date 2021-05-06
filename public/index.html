@@ -9,7 +9,10 @@
 </head>
 <body>
     <div class="wrapper">
-         <header class="main-head"></header>
+         <header class="main-head"> 
+                <img src="https://adexi.eu/wp-content/uploads/2018/12/moomin-banner-4.jpg" alt="Moomin Banner" srcset="">
+           <img src="Moomin_family1.jpeg" alt="Moomin-family">
+         </header>
     <div id="main">
         <!-- <h1>Imageboard</h1> -->
 <form style="margin-top: 10px">
@@ -29,14 +32,15 @@
         
         <figure class="image-frame content">
             <!-- <div @click="toggleImage(image.id)"> -->
+                
             <img  :src="image.url" alt="image" class="gallery">
             <a :href="'#' + image.id">
             <div class="title">
                  <figcaption >{{image.title}}</figcaption>  
-            </div>  
-            </a>
-        </figure>  
-    </div>
+            </div> 
+               </a>
+            </figure>
+         </div>
 </div>
 
     <modal-component :image-id="imageId" v-if="imageId" @close="closeModal">
@@ -60,13 +64,13 @@
             <div class="image-modal-container">
                 <img  :src="url" alt="image"style="object-fit: cover; padding: 10px">
             </div>
-            <div >
+            <div >   
         <div class="modal-text-container">
             <p v-if="title">Title: {{title}}</p>
             <p v-if="description">Description: {{description}}</p>
             <p v-if="username">Uploaded by <span style="font-weight: bold">{{username}}</span> on {{created_at}}</p>
             <p v-else>Uploaded on {{created_at}}</p>
-        </div>
+            </div>
           <comment-component :image-id="imageId"></comment-component>
         </div>
          <span @click="closeModal" class="close" style="cursor:pointer; font-weight: bold">X</span>
@@ -80,11 +84,12 @@
     <input v-model="username" type="text" name="username" placeholder="Your username">
     <button @click.prevent="submitComment" class="submitComment">Submit comment</button>
    </form>
+   
 
 
   <div v-for="comment in comments" :key="comment.id" class="comments-text">
         <p>{{comment.comment_text}}</p>
-        <span>{{comment.username}} on {{comment.created_at}}</span>
+        <span>Posted by {{comment.username}} on {{comment.created_at}}</span>
     </div>
     </div>
 </script>
